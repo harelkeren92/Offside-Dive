@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071018">
+<title>THE SCOUT — Football Rarity</title>
+
+<style>
+:root {
+  --bg: #071018;
+  --panel: #0d1822;
+  --panel2: #111f2b;
+  --line: #203240;
+  --text: #f3f7fa;
+  --muted: #91a4b3;
+  --accent: #48d597;
+  --gold: #ffd166;
+  --danger: #ff7777;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 85% 5%, rgba(72,213,151,.12), transparent 30%),
+    radial-gradient(circle at 10% 90%, rgba(76,130,255,.09), transparent 28%),
+    var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  width: min(680px, 100%);
+  margin: auto;
+  padding: 24px 18px 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.crest {
+  width: 42px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #06120d;
+  clip-path: polygon(
+    50% 0,
+    92% 13%,
+    88% 67%,
+    50% 100%,
+    12% 67%,
+    8% 13%
+  );
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+h1 {
+  margin: 1px 0 0;
+  font-size: 22px;
+  letter-spacing: .08em;
+}
+
+.version {
+  font-size: 11px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 6px 8px;
+  border-radius: 999px;
+}
+
+.intro {
+  margin-bottom: 20px;
+}
+
+.intro h2 {
+  font-size: 30px;
+  line-height: 1.08;
+  margin: 0 0 9px;
+  letter-spacing: -.03em;
+}
+
+.intro p {
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.progress-wrap {
+  margin: 22px 0 18px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.progress {
+  height: 7px;
+  background: #14232e;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width .3s;
+}
+
+.card {
+  background: linear-gradient(
+    145deg,
+    rgba(17,31,43,.96),
+    rgba(10,21,30,.96)
+  );
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+}
+
+.club-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.club-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 16px rgba(72,213,151,.6);
+}
+
+.question {
+  font-size: 27px;
+  line-height: 1.18;
+  font-weight: 800;
+  margin: 0 0 22px;
+  color: #ffffff;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+  margin: -10px 0 16px;
+}
+
+.answer-row {
+  display: flex;
+  gap: 9px;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  background: #071018;
+  border: 1px solid #2a4050;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+  outline: none;
+}
+
+input::placeholder {
+  color: #718492;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(72,213,151,.1);
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 0 18px;
+  background: var(--accent);
+  color: #06120d;
+  font-weight: 900;
+  cursor: pointer;
+  min-height: 52px;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button.secondary {
+  background: #172733;
+  color: var(--text);
+  border: 1px solid #2a4050;
+}
+
+.meter {
+  margin-top: 22px;
+}
+
+.meter-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.meter-bar {
+  height: 10px;
+  background: #152631;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--gold)
+  );
+  transition: width .65s ease;
+}
+
+.result {
+  margin-top: 18px;
+  border-radius: 14px;
+  padding: 15px;
+  background: #09141c;
+  border: 1px solid var(--line);
+  display: none;
+}
+
+.result.show {
+  display: block;
+}
+
+.result.good {
+  border-color: rgba(72,213,151,.45);
+}
+
+.result.bad {
+  border-color: rgba(255,119,119,.35);
+}
+
+.result-title {
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.result-sub {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.next {
+  display: none;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.next.show {
+  display: block;
+}
+
+.score-strip {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.stat {
+  flex: 1;
+  background: #0b1720;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.stat small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.stat strong {
+  font-size: 20px;
+}
+
+.final {
+  display: none;
+  text-align: center;
+}
+
+.final.show {
+  display: block;
+}
+
+.final .big {
+  font-size: 64px;
+  font-weight: 950;
+  line-height: 1;
+  margin: 12px 0;
+}
+
+.final p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.restart {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.how {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.how b {
+  color: #dbe7ed;
+}
+
+@media (max-width: 520px) {
+  .app {
+    padding: 18px 14px 32px;
+  }
+
+  .question {
+    font-size: 24px;
+  }
+
+  .answer-row {
+    flex-direction: column;
+  }
+
+  .answer-row button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="brand">
+    <div class="crest">S</div>
+
+    <div>
+      <div class="eyebrow">FOOTBALL INTELLIGENCE</div>
+      <h1>THE SCOUT</h1>
+    </div>
+  </div>
+
+  <div class="version">v0.1</div>
+</header>
+
+<section class="intro" id="gameIntro">
+
+  <h2>How deep can you scout?</h2>
+
+  <p>
+    Every question has obvious answers.
+    But the deeper you go into football history,
+    the more points you earn.
+  </p>
+
+</section>
+
+<div class="progress-wrap" id="progressWrap">
+
+  <div class="progress-top">
+    <span id="questionLabel">
+      SCOUTING REPORT 1 / 7
+    </span>
+
+    <span id="totalScoreTop">
+      0 PTS
+    </span>
+  </div>
+
+  <div class="progress">
+    <span id="progressFill" style="width:14.3%"></span>
+  </div>
+
+</div>
+
+<main class="card" id="gameCard">
+
+  <div class="club-line">
+    <span class="club-dot"></span>
+    <span id="clubLabel">BARCELONA</span>
+  </div>
+
+  <h2 class="question" id="question">
+    Name a player who played for Barcelona.
+  </h2>
+
+  <div class="hint">
+    Obvious answers score low. Forgotten names score high.
+  </div>
+
+  <form class="answer-row" id="answerForm">
+
+    <input
+      id="answer"
+      autocomplete="off"
+      autocapitalize="words"
+      spellcheck="false"
+      placeholder="Enter a player's name…"
+    >
+
+    <button type="submit">
+      SCOUT
+    </button>
+
+  </form>
+
+  <div class="meter">
+
+    <div class="meter-head">
+      <span>PLAYER DEPTH</span>
+      <span id="depthText">—</span>
+    </div>
+
+    <div class="meter-bar">
+      <div class="meter-fill" id="meterFill"></div>
+    </div>
+
+  </div>
+
+  <div class="result" id="result">
+
+    <div class="result-title" id="resultTitle"></div>
+
+    <div class="result-sub" id="resultSub"></div>
+
+  </div>
+
+  <button class="secondary next" id="nextBtn">
+    NEXT REPORT →
+  </button>
+
+</main>
+
+<div class="score-strip" id="scoreStrip">
+
+  <div class="stat">
+    <small>YOUR SCORE</small>
+    <strong id="score">0</strong>
+  </div>
+
+  <div class="stat">
+    <small>PLAYERS FOUND</small>
+    <strong id="found">0</strong>
+  </div>
+
+  <div class="stat">
+    <small>REPORTS LEFT</small>
+    <strong id="left">7</strong>
+  </div>
+
+</div>
+
+<section class="card final" id="finalCard">
+
+  <div class="eyebrow">
+    SCOUTING REPORT COMPLETE
+  </div>
+
+  <div class="big" id="finalScore">
+    0
+  </div>
+
+  <p id="finalText"></p>
+
+  <button class="restart" id="restartBtn">
+    RUN ANOTHER REPORT
+  </button>
+
+</section>
+
+<div class="how">
+  <b>SCOUT'S RULE:</b>
+  A valid player is worth points based on how obscure they are.
+  v0.1 uses a small prototype database, so some valid players
+  may not be recognized yet.
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+  {
+    club: "BARCELONA",
+    prompt: "Name a player who played for Barcelona.",
+    answers: {
+      "lionel messi": 10,
+      "xavi": 22,
+      "andres iniesta": 28,
+      "carles puyol": 35,
+      "dani alves": 42,
+      "david villa": 50,
+      "pedro": 58,
+      "bojan krkic": 72,
+      "seydou keita": 88,
+      "ibrahim afellay": 105,
+      "cristian tello": 125,
+      "jeffren": 145
+    }
+  },
+
+  {
+    club: "REAL MADRID",
+    prompt: "Name a player who played for Real Madrid.",
+    answers: {
+      "cristiano ronaldo": 10,
+      "zinedine zidane": 22,
+      "raul": 30,
+      "iker casillas": 35,
+      "karim benzema": 40,
+      "mesut ozil": 52,
+      "kaka": 60,
+      "gonzalo higuain": 68,
+      "arjen robben": 82,
+      "royston drenthe": 118,
+      "jonathan woodgate": 145
+    }
+  },
+
+  {
+    club: "LIVERPOOL",
+    prompt: "Name a player who played for Liverpool.",
+    answers: {
+      "steven gerrard": 10,
+      "mohamed salah": 15,
+      "fernando torres": 25,
+      "luis suarez": 30,
+      "xabi alonso": 45,
+      "philippe coutinho": 50,
+      "javier mascherano": 62,
+      "peter crouch": 75,
+      "djibril cisse": 90,
+      "ryan babel": 105,
+      "lazar markovic": 125,
+      "alberto aquilani": 145
+    }
+  },
+
+  {
+    club: "ARSENAL",
+    prompt: "Name a player who played for Arsenal.",
+    answers: {
+      "thierry henry": 10,
+      "dennis bergkamp": 18,
+      "patrick vieira": 25,
+      "cesc fabregas": 38,
+      "mesut ozil": 45,
+      "alexis sanchez": 52,
+      "theo walcott": 65,
+      "tomas rosicky": 78,
+      "alex hleb": 95,
+      "andrey arshavin": 108,
+      "nicolas anelka": 122,
+      "francis jeffers": 145
+    }
+  },
+
+  {
+    club: "MANCHESTER UNITED",
+    prompt: "Name a player who played for Manchester United.",
+    answers: {
+      "wayne rooney": 10,
+      "cristiano ronaldo": 15,
+      "ryan giggs": 22,
+      "paul scholes": 28,
+      "david beckham": 35,
+      "eric cantona": 42,
+      "roy keane": 48,
+      "robin van persie": 60,
+      "nani": 75,
+      "dimitar berbatov": 88,
+      "alexander buttner": 112,
+      "bebe": 135,
+      "dong fangzhuo": 150
+    }
+  },
+
+  {
+    club: "JUVENTUS",
+    prompt: "Name a player who played for Juventus.",
+    answers: {
+      "alessandro del piero": 10,
+      "gianluigi buffon": 18,
+      "zinedine zidane": 25,
+      "andrea pirlo": 32,
+      "pavel nedved": 40,
+      "carlos tevez": 52,
+      "paul pogba": 65,
+      "paulo dybala": 75,
+      "alvaro morata": 88,
+      "alessandro matri": 105,
+      "nicklas bendtner": 125,
+      "nicolas anelka": 145
+    }
+  },
+
+  {
+    club: "BAYERN MUNICH",
+    prompt: "Name a player who played for Bayern Munich.",
+    answers: {
+      "thomas muller": 10,
+      "robert lewandowski": 15,
+      "manuel neuer": 22,
+      "philipp lahm": 30,
+      "franck ribery": 40,
+      "arjen robben": 48,
+      "bastian schweinsteiger": 55,
+      "miroslav klose": 68,
+      "mario mandzukic": 82,
+      "xherdan shaqiri": 95,
+      "mario gotze": 108,
+      "owen hargreaves": 128,
+      "breno": 150
+    }
+  }
+
+];
+
+let current = 0;
+let score = 0;
+let found = 0;
+let answered = false;
+
+const $ = id => document.getElementById(id);
+
+function normalize(value) {
+
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+}
+
+function labelFor(points) {
+
+  if (points <= 20) return "COMMON";
+  if (points <= 50) return "UNCOMMON";
+  if (points <= 90) return "RARE";
+  if (points <= 120) return "OBSCURE";
+
+  return "ULTRA OBSCURE";
+
+}
+
+function loadQuestion() {
+
+  const q = questions[current];
+
+  $("clubLabel").textContent = q.club;
+
+  $("question").textContent = q.prompt;
+
+  $("questionLabel").textContent =
+    `SCOUTING REPORT ${current + 1} / ${questions.length}`;
+
+  $("progressFill").style.width =
+    ((current + 1) / questions.length * 100) + "%";
+
+  $("answer").value = "";
+  $("answer").disabled = false;
+
+  $("result").className = "result";
+
+  $("nextBtn").className = "secondary next";
+
+  $("meterFill").style.width = "0%";
+
+  $("depthText").textContent = "—";
+
+  answered = false;
+
+  updateStats();
+
+}
+
+function updateStats() {
+
+  $("score").textContent = score;
+
+  $("totalScoreTop").textContent = score + " PTS";
+
+  $("found").textContent = found;
+
+  $("left").textContent =
+    questions.length - current - (answered ? 1 : 0);
+
+}
+
+function submitAnswer() {
+
+  if (answered) return;
+
+  const raw = $("answer").value;
+
+  const key = normalize(raw);
+
+  if (!key) return;
+
+  answered = true;
+
+  $("answer").disabled = true;
+
+  const q = questions[current];
+
+  const points = q.answers[key];
+
+  if (points) {
+
+    score += points;
+    found++;
+
+    const meter =
+      Math.min(100, points / 150 * 100);
+
+    $("meterFill").style.width = meter + "%";
+
+    $("depthText").textContent =
+      labelFor(points) + " · +" + points + " PTS";
+
+    $("result").className =
+      "result show good";
+
+    $("resultTitle").textContent =
+      raw.trim() + " — SCOUTED";
+
+    $("resultSub").textContent =
+      `Depth score: ${points}. ${labelFor(points)} answer.`;
+
+  } else {
+
+    $("meterFill").style.width = "4%";
+
+    $("depthText").textContent =
+      "NOT IN DATABASE";
+
+    $("result").className =
+      "result show bad";
+
+    $("resultTitle").textContent =
+      "Not found in the prototype";
+
+    $("resultSub").textContent =
+      "That does NOT mean the player is invalid — v0.1 only contains a small hand-built answer database.";
+
+  }
+
+  $("nextBtn").className =
+    "secondary next show";
+
+  $("nextBtn").textContent =
+    current === questions.length - 1
+      ? "VIEW FINAL REPORT →"
+      : "NEXT REPORT →";
+
+  updateStats();
+
+}
+
+$("answerForm").addEventListener("submit", function(e) {
+
+  e.preventDefault();
+
+  submitAnswer();
+
+});
+
+$("nextBtn").addEventListener("click", function() {
+
+  if (current < questions.length - 1) {
+
+    current++;
+
+    loadQuestion();
+
+  } else {
+
+    $("gameCard").style.display = "none";
+    $("progressWrap").style.display = "none";
+    $("scoreStrip").style.display = "none";
+    $("gameIntro").style.display = "none";
+
+    $("finalCard").className =
+      "card final show";
+
+    $("finalScore").textContent = score;
+
+    $("finalText").textContent =
+      `You found ${found} player${found === 1 ? "" : "s"} across ${questions.length} reports. The deeper the scout, the higher the score.`;
+
+  }
+
+});
+
+$("restartBtn").addEventListener("click", function() {
+
+  current = 0;
+  score = 0;
+  found = 0;
+
+  $("gameCard").style.display = "";
+  $("progressWrap").style.display = "";
+  $("scoreStrip").style.display = "flex";
+  $("gameIntro").style.display = "";
+
+  $("finalCard").className =
+    "card final";
+
+  loadQuestion();
+
+});
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
